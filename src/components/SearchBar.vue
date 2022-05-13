@@ -1,24 +1,28 @@
 <template>
 <div>
-    sono la search bar 
-    69d52ace6a619430659066d4412ea748
-    https://api.themoviedb.org/3/movie/550?api_key=69d52ace6a619430659066d4412ea748=marvel
+    <input type="text" v-model="search" @keyup.enter="$emit('performSerch',search)">
+    <button @click="cerca">cerca</button>
 
 </div>
     
 </template>
 
 <script>
-import state from '../store.js' ;
+
 export default {
     name:'SearchBar',
     data(){
         return{
-            state
+            search:''
 
         }
     },
     methods:{
+        cerca(){
+            this.$emit('performSerch',this.search)
+            this.search = ''
+            
+        }
 
     }
     

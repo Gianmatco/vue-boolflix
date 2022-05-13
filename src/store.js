@@ -1,6 +1,6 @@
-import Vue from 'vue';
+/*import Vue from 'vue';
 
 const state = Vue.observable({
     search: ''
 })
-export default state;
+export default state;*/
