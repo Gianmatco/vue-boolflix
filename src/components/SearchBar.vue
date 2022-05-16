@@ -1,7 +1,8 @@
 <template>
 <div>
-    <input type="text" v-model="search" @keyup.enter="$emit('performSerch',search)">
+    <input type="text" v-model="search" @keyup.enter="$emit('performSearch',search)">
     <button @click="cerca">cerca</button>
+    
 
 </div>
     
@@ -19,7 +20,7 @@ export default {
     },
     methods:{
         cerca(){
-            this.$emit('performSerch',this.search)
+            this.$emit('performSearch',this.search)
             this.search = ''
             
         }

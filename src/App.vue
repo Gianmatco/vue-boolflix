@@ -6,17 +6,9 @@
 
     </header>
     <main>
-
-      <ul>
-        <li v-for="movie in movies" :key="movie.id">
-          id: {{movie.id}}
-          titolo originale: {{movie.original_title}} 
-          titolo: {{movie.title}}
-          lingua: {{movie.original_language}}
-          voto: {{movie.vote_average}}
-        </li>
-      </ul>
-      <grid-list/>
+      <grid-list :items="movies" title="Movies" :loader="loading"/>
+      <grid-list :items="series"  title="Series" :loader="loadingSeries"/>
+      
 
     </main>
    
@@ -24,9 +16,9 @@
 </template>
 
 <script>
-import GridList from './components/GridList.vue'
-import SearchBar from './components/SearchBar.vue'
-import axios from 'axios'
+import GridList from './components/GridList.vue';
+import SearchBar from './components/SearchBar.vue';
+import axios from 'axios';
 
 
 export default {
@@ -39,14 +31,32 @@ export default {
     return{
       apiKey:'69d52ace6a619430659066d4412ea748',
       apiPath:'https://api.themoviedb.org/3/search/',
-      movies:[]
+      movies:[],
+      series:[],
+      loading: false,
+      loadingSeries: false,
+      
+
     }
   },
   methods:{
+    
     getMovies(queryParams){
       axios.get(this.apiPath+'movie', queryParams).then((res)=>{
         //console.log(res.data.results)
         this.movies = res.data.results;
+        this.loading = false;
+      }).catch((error)=>{
+        console.log(error)
+      })
+    },
+    getSeries(queryParams){
+      axios.get(this.apiPath+'tv', queryParams).then((res)=>{
+        //console.log(res.data.results)
+        this.series = res.data.results;
+        this.loadingSeries = false;
+      }).catch((error)=>{
+        console.log(error)
       })
     },
     search(text){
@@ -57,7 +67,11 @@ export default {
           query: text
         }
       }
-      this.getMovies(queryParams)
+      this.loading = true
+      this.loadingSeries = true
+      this.getMovies(queryParams);
+      this.getSeries(queryParams);
+      
       
       
     }
